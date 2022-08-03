@@ -13,14 +13,14 @@ import * as d3 from 'd3';
 
 })
 export class OrderPieChartComponent implements OnInit {
-  
+
   private _data = new BehaviorSubject<any>([]);
   public _rejects = new BehaviorSubject<any>([]);
 
   @Input()
   set data(value) {
       this._data.next(value);
-  };
+  }
 
   get data() {
     return this._data.getValue();
@@ -29,7 +29,7 @@ export class OrderPieChartComponent implements OnInit {
   @Input()
   set rejects(value) {
       this._rejects.next(value);
-  };
+  }
 
   get rejects() {
     return this._rejects.getValue();
@@ -41,25 +41,25 @@ export class OrderPieChartComponent implements OnInit {
   private width: number;
   private height: number;
   private radius: number;
-  private total: number = 0;
+  private total = 0;
   public graphData: IProductionOrderYield[];
   displayedColumns = ['rejectCode', 'count', 'percentageBatch'];
 
   constructor(
 
-  ){ }
+  ) { }
 
   ngOnInit() {
     this.setup();
 
-    //this._data.subscribe(po => {
-      //if(po) {
+    // this._data.subscribe(po => {
+      // if(po) {
         this._rejects.subscribe(rej => {
 
-          if(rej) {
+          if (rej) {
             this.graphData = [{ rejectCode: 'Accepted', count: 0, color: '#3cb44b' }, { rejectCode: 'Rejected', count: 0, color: '#f44336' }];
             rej.forEach(el => {
-              if(el.rejectCode.includes('Accepted')) {
+              if (el.rejectCode.includes('Accepted')) {
                 this.graphData[0].count += el.count;
               } else {
                   this.graphData[1].count += el.count;
@@ -67,7 +67,7 @@ export class OrderPieChartComponent implements OnInit {
             });
             this.total = rej.map(el => el.count).reduce((prev, next) => prev + next);
 
-            if(!this.svg) {
+            if (!this.svg) {
               this.buildSVG();
               this.populatePie(this.graphData);
             } else {
@@ -75,9 +75,9 @@ export class OrderPieChartComponent implements OnInit {
             }
 
           }
-        })
+        });
      // }
-    //});
+    // });
   }
 
   getTotalBatch() {
@@ -95,11 +95,11 @@ export class OrderPieChartComponent implements OnInit {
     this.svg = d3.select('#yieldPieChart')
       .append('svg')
       .attr('width', this.width)
-      .attr('height', this.height)
-      
+      .attr('height', this.height);
+
     this.g = this.svg.append('g')
         .attr('transform', `translate(${this.width / 2},${this.height / 2})`);
-          
+
     this.pieGenerator = d3.pie()
       .sort(null)
       .value(d => d['count']);
@@ -134,7 +134,7 @@ export class OrderPieChartComponent implements OnInit {
       .style('font-weight', 'bold')
       .style('font-size', '12px')
       .text(d => d.data.rejectCode.charAt(0));
-    
+
     text.append('tspan')
       .attr('x', 0)
       .attr('y', '0.7em')
@@ -145,7 +145,7 @@ export class OrderPieChartComponent implements OnInit {
 
   /* update pie chart on order change */
   private updatePie(data) {
-    
+
     this.pieGenerator = d3.pie().sort(null).value(d => d['count']);
     const arcs = this.pieGenerator(data);
     const arc = d3.arc()
@@ -153,18 +153,18 @@ export class OrderPieChartComponent implements OnInit {
       .outerRadius(this.radius);
 
     this.g.selectAll('path')
-      .remove()
-    
+      .remove();
+
     this.g.selectAll('path')
       .data(arcs)
       .enter()
       .append('path')
       .attr('stroke', 'white')
       .attr('fill', d => d.data.color)
-      .attr('d', arc)
-    
+      .attr('d', arc);
+
     this.g.selectAll('text')
-      .remove()  
+      .remove()
 
     const text = this.g
       .selectAll('text')
@@ -180,7 +180,7 @@ export class OrderPieChartComponent implements OnInit {
       .style('font-weight', 'bold')
       .style('font-size', '12px')
       .text(d => d.data.rejectCode.charAt(0));
-    
+
     text.append('tspan')
       .attr('x', 0)
       .attr('y', '0.7em')

@@ -36,8 +36,8 @@ export class DailyTimestampsComponent implements OnInit {
     day: '#4682B4',
     evening: '#FF8C00',
     night: '#ADD8E6',
-    weekend: '#FFBB78' 
-  }
+    weekend: '#FFBB78'
+  };
 
   public width: number;
   private height: number;
@@ -49,11 +49,11 @@ export class DailyTimestampsComponent implements OnInit {
   private svg: any;
   private g: any;
   public data: any;
-  private cellName: string = 'System 1';
+  private cellName = 'System 1';
   private dateSelect: Date = new Date('2019-08-02');
-  private shiftName: string = 'Day Shift';
+  private shiftName = 'Day Shift';
   private avg: number = null;
-  
+
   constructor(
     private meService: MeService,
     private loaderService: LoaderService,
@@ -75,7 +75,7 @@ export class DailyTimestampsComponent implements OnInit {
         } else {
           this.avg = null;
         }
-        if(!!this.svg) this.svg.selectAll('*').remove();
+        if (!!this.svg) { this.svg.selectAll('*').remove(); }
         this.initSvg(this.data);
         this.initAxis(this.data);
         this.drawAxis();
@@ -89,7 +89,7 @@ export class DailyTimestampsComponent implements OnInit {
         });
         this.loaderService.display(false);
       }
-    )
+    );
   }
 
   private initSvg(data) {
@@ -97,7 +97,7 @@ export class DailyTimestampsComponent implements OnInit {
     this.svg.attr('width', 60 + 20 * data.length);
     this.width = +this.svg.attr('width') - this.margin.left - this.margin.right;
     this.height = +this.svg.attr('height') - this.margin.top - this.margin.bottom - 100;
-  
+
     this.g = this.svg.append('g')
         .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
   }
@@ -138,10 +138,10 @@ export class DailyTimestampsComponent implements OnInit {
 
   /* draw the chart */
   private drawBars(data) {
-    const tooltip = d3Tip().attr('class', 'tooltip-resource-timestamp').direction('e').offset([0,5])
+    const tooltip = d3Tip().attr('class', 'tooltip-resource-timestamp').direction('e').offset([0, 5])
     .html((d) => {
-      let content = "<span style='margin-left: 2.5px;'><b>" + 'Time(s): ' + d.delta + ' seconds' + '(' + (d.delta/60).toFixed(2) + ' minutes)' +'</b></span><br>';
-      content +=`
+      let content = '<span style=\'margin-left: 2.5px;\'><b>' + 'Time(s): ' + d.delta + ' seconds' + '(' + (d.delta / 60).toFixed(2) + ' minutes)' + '</b></span><br>';
+      content += `
           <table style="margin-top: 2.5px;">
             <tr><td>Order: </td><td style="text-align: right">` + d.po + `</td></tr>
             <tr><td>Unit Num: </td><td style="text-align: right">` + d.sfc + `</td></tr>
@@ -178,22 +178,22 @@ export class DailyTimestampsComponent implements OnInit {
       .attr('y2', (d => this.y(d) + this.margin.top).bind(this));
   }
 
-  /* vertical lines for shifts */ 
+  /* vertical lines for shifts */
   private createVerticalLines(data) {
-    let verticalPoints = [];
+    const verticalPoints = [];
 
-    for(let i = 0; i < data.length - 1; i++) {
-      if(data[i].po !== data[i+1].po) {
+    for (let i = 0; i < data.length - 1; i++) {
+      if (data[i].po !== data[i + 1].po) {
         verticalPoints.push({
-          midTime: new Date((Date.parse(data[i].actionTime.toString()) + Date.parse(data[i+1].actionTime.toString()))/2),
+          midTime: new Date((Date.parse(data[i].actionTime.toString()) + Date.parse(data[i + 1].actionTime.toString())) / 2),
           splitPoint: ((i + i + 1) / 2) * (this.width / data.length) + this.margin.left + 20,
           poLeft: data[i].po,
-          poRight: data[i+1].po
+          poRight: data[i + 1].po
         });
       }
     }
 
-    for(let item of verticalPoints) {
+    for (const item of verticalPoints) {
       this.svg.append('line')
         .attr('class', 'shift')
         .attr('x1', item.splitPoint)
@@ -202,7 +202,7 @@ export class DailyTimestampsComponent implements OnInit {
         .attr('y2', this.margin.top)
         .style('stroke-width', 1)
         .style('fill', 'none')
-        .style('stroke', 'red')
+        .style('stroke', 'red');
 
       this.svg.append('text')
         .attr('class', 'shift-label')

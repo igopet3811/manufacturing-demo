@@ -20,7 +20,7 @@ export class PoRowDetailDirective {
     if (value !== this.row) {
       this.row = value;
 
-    if(this.row.lineType === 'NEW'){
+    if (this.row.lineType === 'NEW') {
       this.yieldsService.getSampleExpandable().take(1).subscribe(
         success => {
           this.tableData = success;
@@ -28,7 +28,7 @@ export class PoRowDetailDirective {
         err => {
 
         }
-      )
+      );
     }
     }
   }
@@ -47,7 +47,9 @@ export class PoRowDetailDirective {
 
   @HostListener('click', ['$event'])
   onClick(event: any): void {
-    if(this.row.lineType === 'NEW' && event.target.innerText === 'expand_more') this.toggle();
+    if (this.row.lineType === 'NEW' && event.target.innerText === 'expand_more') { 
+      this.toggle();
+    }
   }
 
   toggle(): void {
@@ -60,7 +62,7 @@ export class PoRowDetailDirective {
   }
 
   private render(): void {
-    this.vcRef.clear();      
+    this.vcRef.clear();
     if (this.tRef && this.row) {
       this.vcRef.createEmbeddedView(this.tRef, { row: this.tableData });
     }

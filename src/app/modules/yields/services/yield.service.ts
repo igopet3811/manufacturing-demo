@@ -19,7 +19,7 @@ export class YieldsService {
 
     return observable
       .map(res => res)
-      .catch((error:any) => {
+      .catch((error: any) => {
         return Observable.throw(error.json().error || 'Server error')
       });
   }
@@ -29,7 +29,7 @@ export class YieldsService {
 
     return observable
       .map(res => res)
-      .catch((error:any) => {
+      .catch((error: any) => {
         return Observable.throw(error.json().error || 'Server error')
       });
   }
@@ -39,7 +39,7 @@ export class YieldsService {
 
     return observable
       .map(res => res)
-      .catch((error:any) => {
+      .catch((error: any) => {
         return Observable.throw(error.json().error || 'Server error')
       });
   }

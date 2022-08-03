@@ -2,9 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import * as saveAs from 'file-saver';
-
 import { LoaderService } from '../../../../shared/services/loader.service';
-
 import { LineDescription } from '../../../../shared/data/line-description.data';
 import { svgString2Image, getSVGString } from '../../../../shared/data/svg-helpers';
 
@@ -32,8 +30,7 @@ export class WeeklyMultiComponent implements OnInit {
   private width: number;
   private height: number;
   private margin = {top: 20, right: 20, bottom: 30, left: 40};
-  private lineOffset: number = 10;
-
+  private lineOffset = 10;
   private x: any;
   private y: any;
   private svg: any;
@@ -88,7 +85,7 @@ export class WeeklyMultiComponent implements OnInit {
         this.initAxis(this.dataSource);
         this.drawAxis();
         this.drawBars();
-        this.drawTargetLines();    
+        this.drawTargetLines();
       },
       err => {
         this.toastr.error('Error fetching yields data.', 'Server Error', {
@@ -96,13 +93,13 @@ export class WeeklyMultiComponent implements OnInit {
         });
         this.loaderService.display(false);
       }
-    )
+    );
 
   }
 
   initSvg(data) {
 
-    this.svg = d3.select('#yieldsWeeklyGraph')
+    this.svg = d3.select('#yieldsWeeklyGraph');
     this.svg.attr('width', 50 + 7 * data.length + 75);
 
     this.width = +this.svg.attr('width') - this.margin.left - this.margin.right - 170;
@@ -115,12 +112,12 @@ export class WeeklyMultiComponent implements OnInit {
     this.x = d3Scale.scaleBand().range([0, this.width]).padding(.3);
     this.y = d3Scale.scaleLinear().range([this.height, 0]);
 
-    this.x.domain(data.map(d => (d.year + '-' + d.week.toString().padStart(2,'0'))));
+    this.x.domain(data.map(d => (d.year + '-' + d.week.toString().padStart(2, '0'))));
     this.y.domain([60, 100]);
 
     this.line = d3.line()
       .defined((d) => d['yield'] > 60)
-      .x(d => this.x(d['year'] + '-' + d['week'].toString().padStart(2,'0')) + this.lineOffset)
+      .x(d => this.x(d['year'] + '-' + d['week'].toString().padStart(2, '0')) + this.lineOffset)
       .y(d => this.y(d['yield']))
       .curve(d3.curveCatmullRom.alpha(0.5));
 
@@ -128,7 +125,7 @@ export class WeeklyMultiComponent implements OnInit {
 
     this.dataNest = d3.nest()
         .key(d => d['line'])
-      .entries(this.dataSource)
+      .entries(this.dataSource);
   }
 
   private drawAxis() {
@@ -159,12 +156,12 @@ export class WeeklyMultiComponent implements OnInit {
   }
 
   private drawBars() {
-    let legend = this.svg.append('g');
+    const legend = this.svg.append('g');
 
     this.dataNest.forEach(function(d, i) {
       d.active = true;
-      let lntxt = this.lineDescription.filter(l => (l.line === d.key.toLowerCase() || l.line === d.key.toUpperCase()))[0];
-      let lineText = d.key === 'all' ? 'ALL' : lntxt.description + ' (' + lntxt.type + ')';
+      const lntxt = this.lineDescription.filter(l => (l.line === d.key.toLowerCase() || l.line === d.key.toUpperCase()))[0];
+      const lineText = d.key === 'all' ? 'ALL' : lntxt.description + ' (' + lntxt.type + ')';
 
       this.g.append('path')
         .attr('fill', 'none')
@@ -172,7 +169,7 @@ export class WeeklyMultiComponent implements OnInit {
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 2)
-        .attr('id', 'tag'+d.key.replace(/\s+/g, '')) 
+        .attr('id', 'tag' + d.key.replace(/\s+/g, ''))
         .attr('d', this.line(d.values));
 
       legend.append('rect')
@@ -181,20 +178,20 @@ export class WeeklyMultiComponent implements OnInit {
         .attr('width', 10)
         .attr('height', 10)
         .style('fill', this.colours[i]);
-  
+
       legend.append('text')
         .attr('x', this.width + 70)
         .attr('y', this.margin.top + i * 20 + 10)
         .text(lineText)
-        .on('click', function(){
-          let active = d.active ? false : true,
+        .on('click', function() {
+          const active = d.active ? false : true,
           newOpacity = active ? 1 : 0;
-          d3.selectAll('#tag'+d.key.replace(/\s+/g, ''))
+          d3.selectAll('#tag' + d.key.replace(/\s+/g, ''))
             .transition().duration(100)
             .style('opacity', newOpacity);
           d3.select(this)
-            .style('text-decoration', () => !active ? 'line-through' : 'none')
-          d.active = active
+            .style('text-decoration', () => !active ? 'line-through' : 'none');
+          d.active = active;
         });
 
     }.bind(this));
@@ -216,7 +213,7 @@ export class WeeklyMultiComponent implements OnInit {
     };
 
     const svgString = getSVGString(this.svg.node());
-    svgString2Image(svgString, 2*this.width, 2*this.height, 'png', save);
+    svgString2Image(svgString, 2 * this.width, 2 * this.height, 'png', save);
 
   }
 }

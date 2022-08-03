@@ -21,7 +21,7 @@ import d3Tip from 'd3-tip';
 
 })
 export class OrderWetWeightGraphComponent implements OnInit {
-  
+
   private _data = new BehaviorSubject<any>([]);
   public orders: IProductionOrder[];
 
@@ -40,26 +40,26 @@ export class OrderWetWeightGraphComponent implements OnInit {
   public defaultSelectPosition = [];
   public machineList = [];
   public defaultMachineList = [];
-  public title: string = 'Timeline_1';
+  public title = 'Timeline_1';
   public wetLimits = {'upper': null, 'lower': null, 'target': null, 'geo': null};
   public yDomain = {'upper': null, 'lower': null};
 
   @Input()
   set data(value) {
       this._data.next(value);
-  };
+  }
 
   get data() {
     return this._data.getValue();
   }
 
-  constructor(){ }
+  constructor() { }
 
   ngOnInit() {
     this._data.subscribe(po => {
-      if(po) {
+      if (po) {
         this.orders = po.filter(data => data.wetWeigh != null);
-        this.sampleRunAvg = average(this.orders.filter(sample => sample.rejectCode === null && sample.wetResult > 0).map(sample => sample.wetResult), this.orders[0].targetWet)*100;
+        this.sampleRunAvg = average(this.orders.filter(sample => sample.rejectCode === null && sample.wetResult > 0).map(sample => sample.wetResult), this.orders[0].targetWet) * 100;
         this.positionList = this.defaultSelectPosition = Array.from(new Set(Array.from(po.filter(el => el.location !== null).map(item => item.location).sort())));
         this.machineList = this.defaultMachineList = Array.from(new Set(Array.from(po.filter(el => el.machine !== null).map(item => item.machine).sort())));
         this.wetLimits = {
@@ -73,7 +73,7 @@ export class OrderWetWeightGraphComponent implements OnInit {
           upper: Math.round(this.orders[0].targetWet * 1.15)
         };
 
-        if(!!this.svg) this.svg.selectAll('*').remove();
+        if (!!this.svg) { this.svg.selectAll('*').remove(); }
           this.initSvg(this.orders);
           this.initAxis(this.orders);
           this.drawAxis();
@@ -118,7 +118,7 @@ private drawAxis() {
     .attr('class', 'axis-title')
     .attr('transform', 'rotate(-90)')
     .attr('y', 0 - this.margin.left)
-    .attr('x',0 - (this.height / 2))
+    .attr('x', 0 - (this.height / 2))
     .attr('dy', '1em')
     .text('WEIGHT');
 }
@@ -126,11 +126,11 @@ private drawAxis() {
 /* draw the chart */
 private drawBars(graphData) {
 
-  const tooltip = d3Tip().attr('class', 'tooltip-timeline-wet').direction('e').offset([0,5])
+  const tooltip = d3Tip().attr('class', 'tooltip-timeline-wet').direction('e').offset([0, 5])
   .html((d) => {
-    let passes = d.stFile === null ? d.passes : (+d.stFile.split(':')[3] + +d.stFile.split(':')[7] + +d.stFile.split(':')[11]);
-    let content = "<span style='margin-left: 2.5px;'><b>" + 'Stent #: ' + d.serial + "</b></span><br>";
-    content +=`
+    const passes = d.stFile === null ? d.passes : (+d.stFile.split(':')[3] + +d.stFile.split(':')[7] + +d.stFile.split(':')[11]);
+    let content = '<span style=\'margin-left: 2.5px;\'><b>' + 'Stent #: ' + d.serial + '</b></span><br>';
+    content += `
         <table style="margin-top: 2.5px;">
                 <tr><td>Weight_1: </td><td style="text-align: right">` + d.preWeigh + `</td></tr>
                 <tr><td>Weight_2: </td><td style="text-align: right">` + d.wetWeigh + `</td></tr>
@@ -159,12 +159,11 @@ private drawBars(graphData) {
     .attr('width', this.x.bandwidth())
     .attr('height', d => {
       /* cut off the weights below lower target to not overlap with x-axis labels */
-      if(d.wetResult <= this.yDomain.lower) {
-        return Math.abs(this.y(this.yDomain.lower)-this.y(d.targetWet))
-      } else if(d.wetResult > this.yDomain.upper) {
-        return Math.abs(this.y(this.yDomain.upper)-this.y(d.targetWet))
-      }
-      else return Math.abs(this.y(d.wetResult) - this.y(d.targetWet))
+      if (d.wetResult <= this.yDomain.lower) {
+        return Math.abs(this.y(this.yDomain.lower) - this.y(d.targetWet));
+      } else if (d.wetResult > this.yDomain.upper) {
+        return Math.abs(this.y(this.yDomain.upper) - this.y(d.targetWet));
+      } else { return Math.abs(this.y(d.wetResult) - this.y(d.targetWet)) }
     })
     .attr('fill', d => d.passFail ? '#004c00' : '#e08686')
     .on('mouseover', tooltip.show)
@@ -181,10 +180,10 @@ private drawBars(graphData) {
     .enter().append('text')
     .attr('class', 'reject')
     .attr('text-anchor', 'middle')
-    .attr('x', d => (this.x(d.serial) + this.x.bandwidth()/2))
+    .attr('x', d => (this.x(d.serial) + this.x.bandwidth() / 2))
     .attr('y', d => {
-      if(d.wetResult <= d.targetWet) return this.y(Math.max(d.targetWet, d.wetResult)) - 5;
-      else if(d.wetResult > d.targetWet) return this.y(Math.max(d.targetWet)) + 10;
+      if (d.wetResult <= d.targetWet) { return this.y(Math.max(d.targetWet, d.wetResult)) - 5; }
+      else if (d.wetResult > d.targetWet) { return this.y(Math.max(d.targetWet)) + 10; }
     })
     .text(d => d.rejectCode !== null ? d.rejectCode : null);
   }
@@ -192,8 +191,8 @@ private drawBars(graphData) {
   /* filter by position */
   filterByPosition(evt) {
     let filteredData = [];
-    let initData = this.orders.filter(item => this.defaultMachineList.includes(item.machine.trim()));
-    if(evt.value.length === 0){
+    const initData = this.orders.filter(item => this.defaultMachineList.includes(item.machine.trim()));
+    if (evt.value.length === 0) {
       // reset position multi select
       this.defaultSelectPosition = this.positionList;
       filteredData = initData;
@@ -206,8 +205,8 @@ private drawBars(graphData) {
   /* filter by machine number */
   filterByMachine(evt) {
     let filteredData = [];
-    let initData = this.orders.filter(item => this.defaultSelectPosition.includes(item.location.trim()));
-    if(evt.value.length === 0){
+    const initData = this.orders.filter(item => this.defaultSelectPosition.includes(item.location.trim()));
+    if (evt.value.length === 0) {
       // reset multi select
       this.defaultMachineList = this.machineList;
       filteredData = initData;
@@ -234,12 +233,12 @@ private drawBars(graphData) {
     const geoFactorLower = (limits.geo === 'US') ? .93 : .9;
     const geoFactorText = (limits.geo === 'US') ? '7%' : '10%';
     const domainDiff = this.yDomain.upper - this.yDomain.lower;
-    const txtUpperY = 1 - ((limits.upper - this.yDomain.lower)/domainDiff);
-    const txtLowerY = 1 - ((limits.lower - this.yDomain.lower)/domainDiff);
+    const txtUpperY = 1 - ((limits.upper - this.yDomain.lower) / domainDiff);
+    const txtLowerY = 1 - ((limits.lower - this.yDomain.lower) / domainDiff);
     const lowerTen = Math.ceil(limits.target * geoFactorLower);
     const upperTen = Math.floor(limits.target * geoFactorUpper);
-    const txtUpperAcceptableY = 1 - ((upperTen - this.yDomain.lower)/domainDiff);
-    const txtLowerAcceptableY = 1 - ((lowerTen - this.yDomain.lower)/domainDiff);
+    const txtUpperAcceptableY = 1 - ((upperTen - this.yDomain.lower) / domainDiff);
+    const txtLowerAcceptableY = 1 - ((lowerTen - this.yDomain.lower) / domainDiff);
 
     this.svg.selectAll('line.horizontalGrid').data([limits.lower, limits.upper]).enter()
       .append('line')
@@ -256,7 +255,7 @@ private drawBars(graphData) {
       .attr('x2', this.width + this.margin.left)
       .attr('y1', (d => this.y(d) + this.margin.top).bind(this))
       .attr('y2', (d => this.y(d) + this.margin.top).bind(this));
-      
+
     this.svg.append('text')
       .attr('class', 'wet-limits')
       .attr('transform', 'translate(' + (this.margin.left + 5) + ',' + (this.margin.top + this.height * txtUpperY - 5) + ')')
@@ -286,31 +285,31 @@ private drawBars(graphData) {
       .text(lowerTen + ' (-' + geoFactorText + ' TW)');
   }
 
-  /* vertical lines for shifts */ 
+  /* vertical lines for shifts */
   createVerticalLines(data: IProductionOrder[]) {
-    let verticalPoints = [];
+    const verticalPoints = [];
 
-    for(let i = 0; i < data.length - 1; i++) {
-      if(data[i].shift !== data[i+1].shift) {
+    for (let i = 0; i < data.length - 1; i++) {
+      if (data[i].shift !== data[i + 1].shift) {
         verticalPoints.push({
-          midTime: new Date((Date.parse(data[i].prodTime.toString()) + Date.parse(data[i+1].prodTime.toString()))/2),
+          midTime: new Date((Date.parse(data[i].prodTime.toString()) + Date.parse(data[i + 1].prodTime.toString())) / 2),
           splitPoint: ((i + i + 1) / 2) * (this.width / data.length) + this.margin.left + 11,
           shiftLeft: data[i].shift,
-          shiftRight: data[i+1].shift
+          shiftRight: data[i + 1].shift
         });
       }
     }
 
-    for(let item of verticalPoints) {
+    for (const item of verticalPoints) {
       this.svg.append('line')
         .attr('class', 'shift')
         .attr('x1', item.splitPoint)
         .attr('y1', this.height + this.margin.top)
         .attr('x2', item.splitPoint)
         .attr('y2', this.margin.top)
-        .style("stroke-width", 1)
-        .style("fill", "none")
-        .style("stroke", "red")
+        .style('stroke-width', 1)
+        .style('fill', 'none')
+        .style('stroke', 'red');
 
       this.svg.append('text')
         .attr('class', 'shift-label')
@@ -318,7 +317,7 @@ private drawBars(graphData) {
         .attr('dy', '.2em')
         .attr('text-anchor', 'start')
         .text(item.shiftLeft.substring(0, 4));
-      
+
       this.svg.append('text')
         .attr('class', 'shift-label')
         .attr('transform', 'translate(' + (item.splitPoint + 5) + ',' + (this.margin.top + this.height - 10) + ')')
@@ -339,7 +338,7 @@ private drawBars(graphData) {
     };
 
     const svgString = getSVGString(this.svg.node());
-    svgString2Image(svgString, 2*this.width, 2*this.height, 'png', save);
+    svgString2Image(svgString, 2 * this.width, 2 * this.height, 'png', save);
 
   }
 }

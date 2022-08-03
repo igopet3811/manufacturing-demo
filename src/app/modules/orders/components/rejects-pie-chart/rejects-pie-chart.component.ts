@@ -12,14 +12,14 @@ import * as d3 from 'd3';
 
 })
 export class RejectsPieChartComponent implements OnInit {
-  
+
   private _data = new BehaviorSubject<any>([]);
   public _rejects = new BehaviorSubject<any>([]);
 
   @Input()
   set data(value) {
       this._data.next(value);
-  };
+  }
 
   get data() {
     return this._data.getValue();
@@ -28,7 +28,7 @@ export class RejectsPieChartComponent implements OnInit {
   @Input()
   set rejects(value) {
       this._rejects.next(value);
-  };
+  }
 
   get rejects() {
     return this._rejects.getValue();
@@ -52,32 +52,32 @@ export class RejectsPieChartComponent implements OnInit {
   displayedColumns = ['rejectCode', 'count', 'percentageBatch', 'percentageRej'];
 
   public graphData: IProductionOrderYield[];
-  private total: number = 0;
-  private totalRej: number = 0;
+  private total = 0;
+  private totalRej = 0;
 
-  constructor(){}
+  constructor() {}
 
   ngOnInit() {
     this.setup();
 
-    //this._data.subscribe(po => {
-      //if(po) {
+    // this._data.subscribe(po => {
+      // if(po) {
         this._rejects.subscribe(rej => {
-          if(rej) {
+          if (rej) {
             this.graphData = rej.filter(el => !el.rejectCode.includes('Accepted'));
             this.total = rej.map(el => el.count).reduce((prev, next) => prev + next);
             this.totalRej = this.graphData.length === 0 ? 0 : this.graphData.map(el => el.count).reduce((prev, next) => prev + next);
-            
-            if(!this.svg) {
+
+            if (!this.svg) {
               this.buildSVG();
               this.populatePie(this.graphData);
             } else {
               this.updatePie(this.graphData);
             }
           }
-        })
+        });
      // }
-    //});
+    // });
   }
 
   /* setup dimensions */
@@ -91,11 +91,11 @@ export class RejectsPieChartComponent implements OnInit {
     this.svg = d3.select('#rejectsPieChart')
       .append('svg')
       .attr('width', this.width)
-      .attr('height', this.height)
-      
-    this.g = this.svg.append("g")
+      .attr('height', this.height);
+
+    this.g = this.svg.append('g')
       .attr('transform', `translate(${this.width / 2},${this.height / 2})`);
-          
+
     this.pieGenerator = d3.pie()
       .sort(null)
       .value(d => d['count']);
@@ -103,7 +103,7 @@ export class RejectsPieChartComponent implements OnInit {
 
   /* populate graph with initial data */
   private populatePie(graphData) {
-    
+
     const arcs = this.pieGenerator(graphData);
     const color = d3.scaleOrdinal(this.colours);
 
@@ -133,15 +133,15 @@ export class RejectsPieChartComponent implements OnInit {
       .attr('dy', '0.35em');
 
     /* dont display text for small arcs */
-    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
       .attr('x', 0)
       .attr('y', '-0.7em')
       .style('font-weight', 'bold')
       .style('font-size', '12px')
       .text(d => d.data.rejectCode);
-    
+
     /* dont display text for small arcs */
-    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
       .attr('x', 0)
       .attr('y', '0.7em')
       .style('font-size', '12px')
@@ -150,7 +150,7 @@ export class RejectsPieChartComponent implements OnInit {
   }
 
   private updatePie(data) {
-    
+
     this.pieGenerator = d3.pie().sort(null).value(d => d['count']);
 
     const color = d3.scaleOrdinal(this.colours);
@@ -164,18 +164,18 @@ export class RejectsPieChartComponent implements OnInit {
       .innerRadius(this.radius - 30);
 
     this.g.selectAll('path')
-      .remove()
-    
+      .remove();
+
     this.g.selectAll('path')
       .data(arcs)
       .enter()
       .append('path')
       .attr('stroke', 'white')
       .attr('fill', d => color(d.data.rejectCode))
-      .attr('d', arc)
-    
+      .attr('d', arc);
+
     this.g.selectAll('text')
-      .remove()  
+      .remove()
 
     const text = this.g
       .selectAll('text')
@@ -186,15 +186,15 @@ export class RejectsPieChartComponent implements OnInit {
         .attr('dy', '0.35em');
 
     /* dont display text for small arcs */
-    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
       .attr('x', 0)
       .attr('y', '-0.7em')
       .style('font-weight', 'bold')
       .style('font-size', '12px')
       .text(d => d.data.rejectCode);
-    
+
     /* dont display text for small arcs */
-    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+    text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
       .attr('x', 0)
       .attr('y', '0.7em')
       .style('font-size', '12px')

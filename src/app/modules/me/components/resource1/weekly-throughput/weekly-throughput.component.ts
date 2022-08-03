@@ -37,7 +37,7 @@ export class WeeklyThroughputComponent implements OnInit {
     week: getCurrentWeekNumber(),
     year: new Date().getFullYear(),
     resource: 'Resource_1'
-  }
+  };
   private filterText: string;
 
   constructor(
@@ -53,22 +53,25 @@ export class WeeklyThroughputComponent implements OnInit {
   }
 
   requestData(request) {
-    if(!!this.svg) this.svg.selectAll('*').remove();
-    
+    if (!!this.svg) { 
+      this.svg.selectAll('*').remove();
+    }
+
     this.meService.getWeekly(request).subscribe(
       success => {
         this.dataSource = [];
-        let shifts = Array.from(new Set(Array.from(success.map(data => data.shift)).sort()));
-        let dows = Array.from(new Set(Array.from(success.map(data => data.dow)).sort()));
+        const shifts = Array.from(new Set(Array.from(success.map(data => data.shift)).sort()));
+        const dows = Array.from(new Set(Array.from(success.map(data => data.dow)).sort()));
 
-        for(let day of dows) {
-          let row = {};
+        for (const day of dows) {
+          const row = {};
           row['dow'] = day;
-          for(let shift of shifts) {
-            let total = success.filter(d => d.dow === day).filter(s => s.shift === shift).length === 0 ? 0 : success.filter(d => d.dow === day).filter(s => s.shift === shift)[0].total;
+          for (const shift of shifts) {
+            const total = success.filter(d => d.dow === day).filter(s => s.shift === shift).length === 0 ?
+            0 : success.filter(d => d.dow === day).filter(s => s.shift === shift)[0].total;
             row[`${shift}`] = total;
           }
-          
+
           this.dataSource.push(row);
         }
 
@@ -76,7 +79,7 @@ export class WeeklyThroughputComponent implements OnInit {
         this.initSvg(this.dataSource);
         this.initAxis(this.dataSource, shifts);
         this.drawAxis(request);
-        this.drawBars(this.dataSource, shifts);      
+        this.drawBars(this.dataSource, shifts);
       },
       err => {
         this.toastr.error('Error fetching data.', 'Server Error', {
@@ -84,12 +87,12 @@ export class WeeklyThroughputComponent implements OnInit {
         });
         this.loaderService.display(false);
       }
-    )
+    );
   }
 
   initSvg(graphData) {
 
-    this.svg = d3.select('#stackedGraph')
+    this.svg = d3.select('#stackedGraph');
     this.svg.attr('width', 50 + 90 * graphData.length + 100);
 
     this.width = +this.svg.attr('width') - this.margin.left - this.margin.right - 100;
@@ -111,12 +114,12 @@ export class WeeklyThroughputComponent implements OnInit {
 
   /* draw axis */
   private drawAxis(request) {
-    let weekDate = getDateOfISOWeek(request.week, request.year);
+    const weekDate = getDateOfISOWeek(request.week, request.year);
 
     this.g.append('g')
       .attr('class', 'xAxis')
       .attr('transform', `translate(0,${this.height - this.margin.bottom})`)
-      .call(d3Axis.axisBottom(this.x).tickFormat(d => new Date(weekDate.getTime() + (+d -1)*86400000).toString().substring(0, 10)))
+      .call(d3Axis.axisBottom(this.x).tickFormat(d => new Date(weekDate.getTime() + (+d - 1) * 86400000).toString().substring(0, 10)))
       .selectAll('text')
       .attr('y', 0)
       .attr('x', 9)
@@ -144,7 +147,7 @@ export class WeeklyThroughputComponent implements OnInit {
     const z = d3.scaleOrdinal()
 		.range(['steelblue', 'darkorange', 'lightblue', '#ffbb78'])
     .domain(shifts);
-    
+
 		const group = this.g.selectAll('g.layer')
       .data(d3.stack()
       .keys(shifts)(data), d => d.key);
@@ -154,28 +157,28 @@ export class WeeklyThroughputComponent implements OnInit {
 		group.enter().append('g')
 			.classed('layer', true)
       .attr('fill', d => z(d.key));
-      
+
     const bars = this.g.selectAll('g.layer').selectAll('rect')
 			.data(d => d, e => e.data.dow);
 
-		bars.exit().remove()
+		bars.exit().remove();
 		bars.enter().append('rect')
 			.attr('width', this.x.bandwidth())
 			.merge(bars)
 		.transition().duration(750)
 			.attr('x', d => this.x(d.data.dow))
 			.attr('y', d => this.y(d[1]))
-      .attr('height', d => this.y(d[0]) - this.y(d[1]))
-      
+      .attr('height', d => this.y(d[0]) - this.y(d[1]));
+
     bars.enter().append('text')
-      .text(d => d3.format(',d')(d[1]-d[0]))
+      .text(d => d3.format(',d')(d[1] - d[0]))
       .attr('y', d => this.y(d[1]) + (this.y(d[0]) - this.y(d[1])) / 2)
       .attr('x', d => this.x(d.data.dow) + this.x.bandwidth() / 2 - 15)
       .style('fill', '#ffffff');
-      
+
     const text = this.g.selectAll('.text')
 			.data(data, d => d.dow);
-		text.exit().remove()
+		text.exit().remove();
 
 		text.enter().append('text')
 			.attr('class', 'text')
@@ -217,13 +220,13 @@ export class WeeklyThroughputComponent implements OnInit {
     };
 
     const svgString = getSVGString(this.svg.node());
-    svgString2Image(svgString, 2*this.width, 2*this.height, 'png', save);
+    svgString2Image(svgString, 2 * this.width, 2 * this.height, 'png', save);
   }
 
   /* action on filter select */
   filterSubmitted(req) {
     this.loaderService.display(true);
-    let newReq: IMeResourceReqModel = { week: req.weekSelect, year: req.yearSelect, resource: req.lineSelect };
+    const newReq: IMeResourceReqModel = { week: req.weekSelect, year: req.yearSelect, resource: req.lineSelect };
     this.filterText = `${getLineByResource(req.lineSelect).description} - Week ${req.weekSelect}-${req.yearSelect}`;
     this.requestData(newReq);
   }

@@ -17,12 +17,12 @@ export class MeService {
 
   constructor() { }
 
-  getDailyTimestamps(): Observable<any> { 
+  getDailyTimestamps(): Observable<any> {
     const observable = Observable.of(this.ds);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 
@@ -30,8 +30,8 @@ export class MeService {
     const observable = Observable.of(this.wt);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 
@@ -39,8 +39,8 @@ export class MeService {
     const observable = Observable.of(this.dc);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 
@@ -48,8 +48,8 @@ export class MeService {
     const observable = Observable.of(this.currDate);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 }

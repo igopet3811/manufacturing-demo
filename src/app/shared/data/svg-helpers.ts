@@ -1,29 +1,27 @@
 export const svgString2Image = (svgString, width, height, f, callback) => {
-	let format = f ? f : 'png';
+  const format = f ? f : 'png';
+  const imgsrc = 'data:image/svg+xml;base64,' + btoa( unescape( encodeURIComponent( svgString ) ) );
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
 
-	const imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) );
+  canvas.width = width;
+  canvas.height = height;
 
-	const canvas = document.createElement('canvas');
-	const context = canvas.getContext('2d');
+  const image = new Image();
+  image.onload = function() {
+    context.clearRect ( 0, 0, width, height );
+    context.drawImage(image, 0, 0, width, height);
 
-	canvas.width = width;
-	canvas.height = height;
+    canvas.toBlob(blob => {
+      const filesize = Math.round( blob['length'] / 1024 ) + ' KB';
+      if (callback) { 
+        callback( blob, filesize );
+      }
+    });
+};
 
-	const image = new Image();
-	image.onload = function() {
-		context.clearRect ( 0, 0, width, height );
-		context.drawImage(image, 0, 0, width, height);
-
-		canvas.toBlob(blob => {
-			const filesize = Math.round( blob['length']/1024 ) + ' KB';
-			if (callback) { callback( blob, filesize ); }
-		});
-
-		
-	};
-
-	image.src = imgsrc;
-}
+  image.src = imgsrc;
+};
 
 export const getSVGString = (svgNode) => {
   svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
@@ -53,8 +51,8 @@ const getCSSStyles = (parentElement) => {
     const nodes = parentElement.getElementsByTagName('*');
     for (let i = 0; i < nodes.length; i++) {
         const id = nodes[i].id;
-        if ( !contains('#'+id, selectorTextArr) ) {
-            selectorTextArr.push( '#'+id );
+        if ( !contains('#' + id, selectorTextArr) ) {
+            selectorTextArr.push( '#' + id );
         }
 
         const classes = nodes[i].classList;
@@ -69,11 +67,11 @@ const getCSSStyles = (parentElement) => {
     let extractedCSSText = '';
     for (let i = 0; i < document.styleSheets.length; i++) {
         const s = document.styleSheets[i];
-        
+
         try {
-            if(!s['cssRules']) { continue; }
-        } catch( e ) {
-                if(e.name !== 'SecurityError') { throw e; } // for Firefox
+            if (!s['cssRules']) { continue; }
+        } catch ( e ) {
+                if (e.name !== 'SecurityError') { throw e; } // for Firefox
                 continue;
             }
 
@@ -84,20 +82,20 @@ const getCSSStyles = (parentElement) => {
             }
         }
     }
-    
+
 
     return extractedCSSText;
 
-    function contains(str,arr) {
+    function contains(str, arr) {
         return arr.indexOf( str ) === -1 ? false : true;
     }
 
-}
+};
 
 const appendCSS = (cssText, element) => {
     const styleElement = document.createElement('style');
-    styleElement.setAttribute('type','text/css'); 
+    styleElement.setAttribute('type', 'text/css');
     styleElement.innerHTML = cssText;
     const refNode = element.hasChildNodes() ? element.children[0] : null;
     element.insertBefore( styleElement, refNode );
-}
+};

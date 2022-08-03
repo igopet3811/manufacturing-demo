@@ -3,22 +3,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     redirectTo: 'yields/overview',
     pathMatch: 'full'
   },
   {
-    path:'me/resource1',
+    path: 'me/resource1',
     redirectTo: 'me/resource1',
     pathMatch: 'full'
   },
   {
-    path:'yields',
+    path: 'yields',
     redirectTo: 'yields/overview',
     pathMatch: 'full'
   },
   {
-    path:'orders',
+    path: 'orders',
     redirectTo: 'orders',
     pathMatch: 'full'
   },
@@ -38,7 +38,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path:'**',
+    path: '**',
     redirectTo: 'auth/login',
     pathMatch: 'full'
   },

@@ -156,18 +156,18 @@ export const getCfnsFromFamiliesGeo = (arrFam: String[], arrGeo: String[], arrSi
     let cfnsF = [], cfnsG = [], cfnsS = [];
 
     if(!!arrFam) {
-        for(let family of arrFam) {
+        for(const family of arrFam) {
             cfnsF = cfnsF.concat(ProductList.filter(p => family === p.family));
         }
     } else {
         cfnsF = [...ProductList];
     }
 
-    for(let geo of arrGeo) {
+    for(const geo of arrGeo) {
         cfnsG = cfnsG.concat(...cfnsF.filter(p => geo === p.geo));
     }
 
-    for(let size of arrSiz) {
+    for(const size of arrSiz) {
         cfnsS = cfnsS.concat(...cfnsG.filter(p => size === p.size));
     }
 

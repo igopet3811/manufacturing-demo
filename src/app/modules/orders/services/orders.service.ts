@@ -19,8 +19,8 @@ export class OrdersService {
     const observable = Observable.of(this.timeline);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 
@@ -29,8 +29,8 @@ export class OrdersService {
     const observable = Observable.of(this.fails);
     return observable
       .map(res => res)
-      .catch((error:any) => {
-        return Observable.throw(error.json().error || 'Server error')
+      .catch((error: any) => {
+        return Observable.throw(error.json().error || 'Server error');
       });
   }
 }

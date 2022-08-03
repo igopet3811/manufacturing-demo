@@ -21,16 +21,16 @@ export const LineDescription = Object.freeze([
         active: true,
         resource: 'Resource_3'
     }
-])
+]);
 
 export const getLineDetails = (line: string) => {
     return LineDescription.filter(item => item.line === line)[0] || null;
-}
+};
 
 export const getCells = () => {
     return LineDescription.filter(item => item.resource !== null) || null;
-}
+};
 
 export const getLineByResource = (resource: string) => {
     return LineDescription.filter(item => item.resource === resource)[0] || null;
-}
+};

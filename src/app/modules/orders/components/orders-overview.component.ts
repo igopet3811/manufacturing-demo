@@ -13,7 +13,7 @@ export class OrdersOverviewComponent implements OnInit {
   data = null;
   rejects = null;
   po = null;
-  private displayGraph: boolean = true;
+  private displayGraph = true;
 
   constructor(
     private ordersService: OrdersService,
@@ -27,27 +27,25 @@ export class OrdersOverviewComponent implements OnInit {
     this.ordersService.getOrderData().subscribe(
       success => {
         this.loaderService.display(false);
-        if(success.length === 0) {
+        if (success.length === 0) {
           this.data = null;
           this.po = po;
-        }
-        else {
+        } else {
           this.data = success;
         }
       },
       err => {
 
       }
-    )
+    );
   }
 
   poRejects(po: number) {
     this.ordersService.getOrderRejects().subscribe(
       success => {
-        if(success.length === 0) {
+        if (success.length === 0) {
           this.rejects = null;
-        }
-        else {
+        } else {
           this.rejects = success;
           this.displayGraph = this.rejects.length > 1;
         }
@@ -55,6 +53,6 @@ export class OrdersOverviewComponent implements OnInit {
       err => {
 
       }
-    )
+    );
   }
 }

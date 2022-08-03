@@ -3,11 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { YieldsRoutingModule } from './yields-routing.module';
-/* services */
 import { YieldsService } from './services/yield.service';
-/* components */
 import { YieldsComponent } from './yields.container';
 import { YieldsOverviewComponent } from './components/yields-overview.component';
 import { YieldsTableComponent } from './components/yields-table/yields-table.component';

@@ -1,7 +1,7 @@
 export interface IMeResourceReqModel {
     week: number;
     year: number;
-    resource: string
+    resource: string;
 }
 
 export interface IMeDailyReqModel {
