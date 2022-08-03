@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as saveAs from 'file-saver';
 
-import { IProductionOrder } from '../../../../shared/models/production-order.model';
+import { IProductionOrder } from '../../../../shared/models/order.model';
 import { getLineDetails } from '../../../../shared/data/line-description.data';
 import { average } from '../../../../shared/data/stats';
 import { svgString2Image, getSVGString } from '../../../../shared/data/svg-helpers';

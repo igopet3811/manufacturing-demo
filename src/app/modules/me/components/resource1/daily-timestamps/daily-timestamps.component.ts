@@ -8,7 +8,7 @@ import { svgString2Image, getSVGString } from '../../../../../shared/data/svg-he
 import { getCurrentWeekNumber, getISOWeekNumber } from '../../../../../shared/data/date-helpers';
 import { getLineByResource } from '../../../../../shared/data/line-description.data';
 import { avg } from '../../../../../shared/data/stats';
-import { IMeDailyReqModel } from '../../../../../shared/models/me-resource1-req.model';
+import { IMeDailyReqModel } from '../../../../../shared/models/resource-req.model';
 
 import * as d3 from 'd3';
 import * as d3Scale from 'd3-scale';

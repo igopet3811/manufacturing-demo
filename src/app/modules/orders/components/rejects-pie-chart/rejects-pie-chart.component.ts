@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { IProductionOrderYield } from '../../../../shared/models/production-order-yield.model';
+import { IProductionOrderYield } from '../../../../shared/models/order-yield.model';
 import * as d3 from 'd3';
 
 @Component({

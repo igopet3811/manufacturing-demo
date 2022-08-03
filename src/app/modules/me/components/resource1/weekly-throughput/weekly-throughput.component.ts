@@ -5,7 +5,7 @@ import * as saveAs from 'file-saver';
 import { MeService } from '../../../services/me.service';
 import { LoaderService } from '../../../../../shared/services/loader.service';
 import { svgString2Image, getSVGString } from '../../../../../shared/data/svg-helpers';
-import { IMeResourceReqModel } from '../../../../../shared/models/me-resource1-req.model';
+import { IMeResourceReqModel } from '../../../../../shared/models/resource-req.model';
 import { getCurrentWeekNumber, getDateOfISOWeek } from '../../../../../shared/data/date-helpers';
 import { getLineByResource } from '../../../../../shared/data/line-description.data';
 
