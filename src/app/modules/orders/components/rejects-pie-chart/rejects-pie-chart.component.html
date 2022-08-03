@@ -1,0 +1,40 @@
+<mat-card class="card">
+
+  <mat-card-title>
+    Rejects
+  </mat-card-title>
+    
+  <div id="rejectsPieChart"></div>
+
+  <div>
+    <table mat-table [dataSource]="graphData">
+      <!-- Code Column -->
+      <ng-container matColumnDef="rejectCode">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let reject"> {{reject.rejectCode}} </td>
+      </ng-container>
+    
+      <!-- Count Column -->
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let reject"> {{reject.count}} </td>
+      </ng-container>
+
+      <!-- Percentage from Total in Batch Column -->
+      <ng-container matColumnDef="percentageBatch">
+          <th mat-header-cell *matHeaderCellDef> from Batch % </th>
+          <td mat-cell *matCellDef="let reject"> {{ reject.count/total | percent : '1.2-2'}} </td>
+      </ng-container>
+
+      <!-- Percentage from Rejects in Batch Column -->
+      <ng-container matColumnDef="percentageRej">
+          <th mat-header-cell *matHeaderCellDef> from Rejects % </th>
+          <td mat-cell *matCellDef="let reject"> {{ reject.count/totalRej | percent : '1.2-2'}} </td>
+      </ng-container>
+              
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</mat-card>

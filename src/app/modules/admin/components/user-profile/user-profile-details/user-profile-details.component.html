@@ -1,0 +1,29 @@
+<mat-card class="user-profile-details-card">
+
+  <mat-card-title class="card-title-container">
+      <span>User Profile</span>
+  </mat-card-title>
+
+  <mat-card-content class="user-profile-details-content">
+      <form class="form" [formGroup]="userProfileForm">
+
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username" readonly>
+          </mat-form-field>
+      
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          
+          <div>
+            <mat-checkbox color="primary" formControlName="isAdmin">Admin</mat-checkbox>
+          </div>
+
+          <div class="update-profile-details-button">
+            <button class="mat-raised-button mat-primary" (click)="update()">Update</button>
+          </div>
+
+      </form>
+  </mat-card-content>
+
+</mat-card>

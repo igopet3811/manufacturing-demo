@@ -1,0 +1,23 @@
+<mat-tab-group [@.disabled]="true">
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="admin-tab-icon">supervisor_account</mat-icon>
+            Users
+        </ng-template>
+        <ng-template matTabContent>
+            <app-admin-users></app-admin-users>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="admin-tab-icon">security</mat-icon>
+            Roles
+        </ng-template>
+        <ng-template matTabContent>
+            <app-admin-roles></app-admin-roles>
+        </ng-template>
+    </mat-tab>
+      
+</mat-tab-group>

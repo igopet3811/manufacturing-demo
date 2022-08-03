@@ -1,0 +1,31 @@
+<form [formGroup]="yieldsGraphFilter" (ngSubmit)="onFilterSubmit()" fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+
+  <mat-form-field>
+    <mat-select placeholder="Number of orders to display" formControlName="ordersDisplay" disableRipple>
+      <mat-option *ngFor="let num of ordersDisplay" [value]="num">{{ num }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Geography" formControlName="geographies" multiple disableRipple>
+      <mat-option *ngFor="let g of geo" [value]="g">{{ g }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Product Family" formControlName="families" multiple disableRipple>
+      <mat-option *ngFor="let f of families" [value]="f">{{ f }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-select placeholder="Size" formControlName="sizes" multiple disableRipple>
+      <mat-option *ngFor="let s of sizes" [value]="s">{{ s }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="filter-button">
+    <button mat-raised-button color="primary" [disabled]="disableFilter()">Apply Filter</button>
+  </div>
+
+</form>

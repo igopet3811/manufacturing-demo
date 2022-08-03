@@ -1,0 +1,17 @@
+<mat-card class="resource1-daily-cumulative-card">
+
+  <mat-card-title>
+      Daily Resource Cumulative
+      <mat-icon *ngIf="width !== 0" class="icon-clickable" (click)="export()" matTooltip="Export to PNG">save_alt</mat-icon>
+  </mat-card-title>
+
+  <h4>Daily Target: {{target}}, Actual output: {{output}}</h4>
+  <div class="resource1-daily-cumulative-outer">
+    <div class="resource1-daily-cumulative-inner">
+        <svg height="500" id="dailyCumulative"></svg>
+    </div>
+  </div>
+
+  <app-daily-cumulative-sliders [cfnTargets]='cfnTargets' (newTargets)=filterSubmitted($event)></app-daily-cumulative-sliders>
+
+</mat-card>

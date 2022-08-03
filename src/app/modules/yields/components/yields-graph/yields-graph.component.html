@@ -1,0 +1,18 @@
+<mat-card class="yields-graph-card">
+
+    <mat-card-title>
+        Timeline
+        <mat-icon *ngIf="width < 30000" class="icon-clickable" (click)="export()" matTooltip="Export to PNG">save_alt</mat-icon>
+    </mat-card-title>
+      
+    <app-yields-graph-filter (filter)=filterSubmitted($event)></app-yields-graph-filter>
+
+    <div class="yields-timeline-outer">
+        <div class="yields-timeline-inner"> 
+            <svg height="600" id="yieldsGraph"></svg>
+        </div>
+    </div>
+
+    <div class="tooltip"></div>
+
+</mat-card>

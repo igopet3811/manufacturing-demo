@@ -1,0 +1,32 @@
+<mat-card class="graph-card">
+
+    <mat-card-title>
+        Timeline_2
+        <mat-icon class="icon-clickable" (click)="export()" matTooltip="export to PNG">save_alt</mat-icon>
+    </mat-card-title>
+    
+    <div class="order-timeline-filter" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field *ngIf="positionList.length > 1">
+        <mat-select placeholder="Position(s)" [(ngModel)]="defaultSelectPosition" (selectionChange)="filterByPosition($event)" multiple disableRipple>
+          <mat-option *ngFor="let p of positionList" [value]="p">{{p}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="machineList.length > 1">
+        <mat-select placeholder="Machine(s)" [(ngModel)]="defaultMachineList" (selectionChange)="filterByMachine($event)" multiple disableRipple>
+          <mat-option *ngFor="let s of machineList" [value]="s">{{s}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-checkbox *ngIf="!!lineType && lineType === 'IOOS'" [(checked)]="isChecked" (change)="toggle($event)">Show only sample weights</mat-checkbox>
+    <div *ngIf="isChecked">Running average: {{sampleRunAvg.toFixed(3)}} %</div>
+    <div *ngIf="!isChecked">Running average: {{runAvg.toFixed(3)}} %</div>
+    
+    <div class="graph-outer">
+      <div class="graph-inner"> 
+        <svg height="500" id="dw-graph"></svg>
+      </div>
+    </div>
+
+</mat-card>

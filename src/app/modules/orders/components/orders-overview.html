@@ -1,0 +1,36 @@
+<div fxLayout="column">
+    <app-order-select (po)="poSubmitted($event)" (po)="poRejects($event)"></app-order-select>
+
+    <div *ngIf="!!data" fxLayout="row">
+        <app-order-details [data]="data"></app-order-details>
+        <app-yield-pie-chart [data]="data" [rejects]="rejects"></app-yield-pie-chart>
+        <app-rejects-pie-chart *ngIf="displayGraph" [data]="data" [rejects]="rejects"></app-rejects-pie-chart>
+    </div>
+
+    <div *ngIf="!!data" fxLayout="column">
+        <app-order-dry-graph [data]="data"></app-order-dry-graph>
+        <app-order-wet-graph [data]="data"></app-order-wet-graph>
+    </div>
+
+    <div *ngIf="!data && !po" fxLayout="column">
+        <mat-card class="card-info">
+            <div>
+                <mat-icon class="icon" color="primary">info</mat-icon>
+            </div>
+            <div>
+                Please type in anything to display the demo charts.
+            </div>
+        </mat-card>
+    </div>
+
+    <div *ngIf="!data && po" fxLayout="column">
+        <mat-card class="card-info">
+            <div>
+                <mat-icon class="icon-warning" color="primary">warning</mat-icon>
+            </div>
+            <div>
+                Order {{po}} doesn't exist.
+            </div>
+        </mat-card>
+    </div>
+</div>

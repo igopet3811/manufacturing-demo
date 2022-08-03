@@ -1,0 +1,24 @@
+<mat-tab-group [@.disabled]="true">
+
+  <mat-tab>
+      <ng-template mat-tab-label>
+          <mat-icon class="user-profile-tab-icon">person</mat-icon>
+          Users
+      </ng-template>
+      <ng-template matTabContent>
+        <app-user-profile-details></app-user-profile-details>
+      </ng-template>
+
+  </mat-tab>
+
+  <mat-tab>
+      <ng-template mat-tab-label>
+          <mat-icon class="user-profile-tab-icon">security</mat-icon>
+          Password Change
+      </ng-template>
+      <ng-template matTabContent>
+        <app-user-profile-psw-change></app-user-profile-psw-change>
+      </ng-template>
+  </mat-tab>
+    
+</mat-tab-group>

@@ -1,0 +1,71 @@
+.graph-ww-card {
+    width: 1200px;
+    margin: 20px;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.gridline{
+    stroke: black;
+    shape-rendering: crispEdges;
+    stroke-opacity: .2;
+}
+
+.outer {
+    width: 1200px;
+    height: 550px;
+    overflow: auto;
+}
+
+.inner {
+    width: 1200px;
+    height:500px;
+}
+
+.target-wet {
+    fill: none;
+    stroke: green;
+    stroke-width: 2;
+    shape-rendering: crispEdges;
+    opacity: 0.4;
+    stroke-dasharray: 8;
+}
+
+.target-geo {
+    fill: none;
+    stroke: red;
+    stroke-width: 2;
+    shape-rendering: crispEdges;
+    opacity: 0.4;
+    stroke-dasharray: 8;
+}
+
+.tooltip-timeline-wet {
+    line-height: 1;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 99999999;
+}
+
+.wet-limits {
+    font-size: 11px;
+    font-weight: bold;
+    fill:green;
+}
+
+.geo-limits {
+    font-size: 11px;
+    font-weight: bold;
+    fill:red;
+}
+
+.shift-label {
+    font-size: 11px;
+    font-weight: bold;
+    fill:red;
+}

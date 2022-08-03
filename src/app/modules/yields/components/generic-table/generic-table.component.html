@@ -1,0 +1,18 @@
+<mat-card class="generic-table-card">
+  
+  <div class="table-container">
+
+    <mat-table [dataSource]="data" matSort class="mat-elevation-z8">
+  
+      <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef> {{ col.header }} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{col.name !== 'yield' ? row[col.name] : row[col.name]/100 | percent : '1.2-2'}} </mat-cell>
+      </ng-container>
+      
+      <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  </div>
+
+</mat-card>

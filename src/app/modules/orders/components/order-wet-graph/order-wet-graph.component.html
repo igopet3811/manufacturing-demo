@@ -1,0 +1,30 @@
+<mat-card class="graph-ww-card">
+
+    <mat-card-title>
+        {{ title }}
+        <mat-icon class="icon-clickable" (click)="export()" matTooltip="export to PNG">save_alt</mat-icon>
+    </mat-card-title>
+    
+    <div class="order-timeline-filter" fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field *ngIf="positionList.length > 1">
+            <mat-select placeholder="Position(s)" [(ngModel)]="defaultSelectPosition" (selectionChange)="filterByPosition($event)" multiple disableRipple>
+                <mat-option *ngFor="let p of positionList" [value]="p">{{p}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="machineList.length > 1">
+            <mat-select placeholder="Machine(s)" [(ngModel)]="defaultMachineList" (selectionChange)="filterByMachine($event)" multiple disableRipple>
+                <mat-option *ngFor="let s of machineList" [value]="s">{{s}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>Running average: {{sampleRunAvg.toFixed(3)}} %</div>
+
+    <div class="outer">
+        <div class="inner"> 
+            <svg height="500" id="ww-graph"></svg>
+        </div>
+    </div>
+
+</mat-card>

@@ -1,0 +1,33 @@
+<mat-tab-group [@.disabled]="true">
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="yields-tab-icon">publish</mat-icon>
+                Resource_1 Outputs Weekly
+            </ng-template>
+            <ng-template matTabContent>
+                <app-weekly-throughput [lastUnitTime]="lastUnitTime"></app-weekly-throughput>
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="yields-tab-icon">timeline</mat-icon>
+                Resource_1 Daily Shift Performance
+            </ng-template>
+            <ng-template matTabContent>
+                <app-daily-timestamps [lastUnitTime]="lastUnitTime"></app-daily-timestamps>
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="yields-tab-icon">timeline</mat-icon>
+                Resource_1 Daily Cumulative
+            </ng-template>
+            <ng-template matTabContent>
+                <app-daily-cumulative></app-daily-cumulative>
+            </ng-template>
+        </mat-tab>
+          
+    </mat-tab-group>

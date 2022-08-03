@@ -1,0 +1,131 @@
+<mat-card class="yields-table-card">
+  
+  <app-yields-filter (filter)=filterSubmitted($event)></app-yields-filter>
+  
+  <div class="table-container">
+  
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  
+    <mat-table [dataSource]="sortedData" matSort class="mat-elevation-z8">
+  
+      <ng-container matColumnDef="sampleTable">
+        <mat-header-cell *matHeaderCellDef fxFlex="80px"></mat-header-cell>
+        <mat-cell *matCellDef="let po" fxFlex="80px" class="cell-clickable">
+          <mat-icon>{{po.lineType === 'NEW' ? 'expand_more' : null}}</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="order">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Num </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{po.order}} </mat-cell>
+      </ng-container>
+          
+      <ng-container matColumnDef="batch">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Batch </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.batch }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cfn">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> CFN </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.cfn }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="geo">
+        <mat-header-cell *matHeaderCellDef> Geo </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ getGeography(po) }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="producedAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Produced @ </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.producedAt | date:'dd-MMM-yyyy HH:mm' }} </mat-cell>
+        </ng-container>
+
+      <ng-container matColumnDef="line">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Line/Cell </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.lineDescription }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Process Type </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.lineType }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="shift">
+        <mat-header-cell *matHeaderCellDef> Shift </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.shift }} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Units Total </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{po.total}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="accepted">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Accepted </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{po.accepted}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="yield">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Yield % </mat-header-cell>
+        <mat-cell *matCellDef="let po"> {{ po.yield | percent : '1.2-2'}} </mat-cell>
+      </ng-container>
+      
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row
+          *matRowDef="let row; columns: displayedColumns; let i = index;" 
+          matRipple
+          class="element-row"
+          [ngStyle]="{'background-color':(row.accepted/row.total)*100 < 80 ? '#ffa6a6' : 'null' }"
+          [ngClass]="row.lineType !== 'OLD' ? 'row-expandable' : 'row-not-expandable'"
+          [poRowDetail]="row"
+          [poRowDetailTpl]="tpl">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+  
+  </div>
+
+  <ng-template #tpl let-row="row">
+    <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
+      <mat-table mat-table [dataSource]="row">
+        <ng-container matColumnDef="shift">
+          <mat-header-cell *matHeaderCellDef> Shift </mat-header-cell>
+          <mat-cell *matCellDef="let samples"> {{samples.shift}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="produced">
+          <mat-header-cell *matHeaderCellDef> Produced </mat-header-cell>
+          <mat-cell *matCellDef="let samples"> {{samples.produced}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{getTotalProduced(row)}} </mat-footer-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="sampled">
+          <mat-header-cell *matHeaderCellDef> Sampled </mat-header-cell>
+          <mat-cell *matCellDef="let samples"> {{samples.sampled}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{getTotalSampled(row)}} </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sampledFromProduced">
+          <mat-header-cell *matHeaderCellDef> Sampled from Shift Produced (%) </mat-header-cell>
+          <mat-cell *matCellDef="let samples"> {{samples.sampled / samples.produced | percent : '1.2-2'}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> N/A </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sampledFromTotal">
+          <mat-header-cell *matHeaderCellDef> Sampled from Total Produced (%) </mat-header-cell>
+          <mat-cell *matCellDef="let samples"> {{samples.sampled / getTotalProduced(row) | percent : '1.2-2'}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{getTotalSampled(row) / getTotalProduced(row) | percent : '1.2-2'}} </mat-footer-cell>
+        </ng-container>
+                
+        <mat-header-row *matHeaderRowDef="expandedColumns"></mat-header-row>
+        <mat-row *matRowDef="let samples; columns: expandedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="expandedColumns"></mat-footer-row>
+      </mat-table>
+    </div>
+  </ng-template>
+
+</mat-card>

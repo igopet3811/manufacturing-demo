@@ -1,0 +1,18 @@
+<mat-card class="yields-line-graph-card">
+
+    <mat-card-title>
+        Line Yields
+        <mat-icon class="icon-clickable" (click)="export()" matTooltip="export to PNG">save_alt</mat-icon>
+    </mat-card-title>
+
+    <app-yields-line-filter (filter)=filterSubmitted($event)></app-yields-line-filter>
+      
+    <div class="yields-line-outer">
+        <div class="yields-line-inner"> 
+            <svg height="600" id="yieldsLineGraph"></svg>
+        </div>
+    </div>
+    
+    <div class="yields-line-tooltip"></div>
+
+</mat-card>

@@ -1,0 +1,29 @@
+<mat-card class="user-profile-psw-change-card">
+
+    <mat-card-title class="card-title-container">
+        <span>Password Change</span>
+    </mat-card-title>
+  
+    <mat-card-content class="user-profile-psw-change-content">
+        <form class="form" [formGroup]="pswChangeForm">      
+            
+          <mat-form-field>
+            <input matInput type=password placeholder="Current Password" formControlName="old">
+          </mat-form-field>
+      
+          <mat-form-field>
+            <input matInput type=password placeholder="New Password" formControlName="new1">
+          </mat-form-field>
+      
+          <mat-form-field>
+            <input matInput type=password placeholder="Confirm New Password" formControlName="new2">
+          </mat-form-field>
+
+          <div class="update-profile-psw-change-button">
+            <button class="mat-raised-button mat-primary" (click)="changePassword()" [disabled]="!pswChangeForm.valid">Change Password</button>
+          </div>
+  
+        </form>
+    </mat-card-content>
+  
+  </mat-card>

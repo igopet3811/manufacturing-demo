@@ -1,0 +1,42 @@
+<mat-card class="users-table-card">
+
+  <div class="filter-button">
+    <button mat-raised-button color="primary" (click)="addUser($event)">
+      <mat-icon>add</mat-icon>
+      New User
+    </button>
+  </div>
+
+  <div class="table-container">
+
+    <table mat-table [dataSource]="sortedData" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+      </ng-container>
+          
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <td mat-cell *matCellDef="let user"> {{ user.username }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td mat-cell *matCellDef="let user"> {{ user.role }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editUser(row, $event)"></tr>
+    </table>
+
+  <mat-paginator [pageSizeOptions]="[20, 50, 100]"></mat-paginator>
+
+  </div>
+
+</mat-card>

@@ -1,0 +1,25 @@
+<form [formGroup]="timestampFilter" (ngSubmit)="onFilterSubmit()" fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+  
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Select a date" formControlName="dateSelect" [max]="today">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select a shift" formControlName="shiftSelect" disableRipple>
+      <mat-option *ngFor="let shift of shiftSelect" [value]="shift">{{ shift }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select a cell/line" formControlName="lineSelect" disableRipple>
+      <mat-option *ngFor="let l of lineSelect" [value]="l.resource">{{ l.description + ' - ' + l.type }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="filter-button">
+    <button mat-raised-button color="primary">Apply Filter</button>
+  </div>
+
+</form>

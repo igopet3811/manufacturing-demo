@@ -1,0 +1,25 @@
+<form [formGroup]="weekFilter" (ngSubmit)="onFilterSubmit()" fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+  
+  <mat-form-field>
+    <mat-select placeholder="Select a year" formControlName="yearSelect" disableRipple>
+      <mat-option *ngFor="let y of yearSelect" [value]="y">{{ y }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select a week" formControlName="weekSelect" disableRipple>
+      <mat-option *ngFor="let w of weekSelect" [value]="w">{{ w }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select a cell/line" formControlName="lineSelect" disableRipple>
+      <mat-option *ngFor="let l of lineSelect" [value]="l.resource">{{ l.description + ' - ' + l.type }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="filter-button">
+    <button mat-raised-button color="primary">Apply Filter</button>
+  </div>
+
+</form>

@@ -1,0 +1,20 @@
+<mat-card class="resource1-graph-card">
+
+  <mat-card-title>
+      Weekly Resource Throughputs
+      <mat-icon *ngIf="width !== 0"  class="icon-clickable" (click)="export()" matTooltip="Export to PNG">save_alt</mat-icon>
+      <mat-icon class="icon-clickable" matTooltip="Time of the last unit in the DB: {{ lastUnitTime | date:'EEEE, MMMM d, y @ hh:mm a'}}">info_outline</mat-icon>
+  </mat-card-title>
+
+  <app-weekly-throughput-filter (filter)=filterSubmitted($event)></app-weekly-throughput-filter>
+  <h3 *ngIf="dataSource.length !== 0">{{ filterText }}</h3>
+    
+  <div class="resource1-outer">
+      <div class="resource1-inner"> 
+          <svg height="600" id="stackedGraph"></svg>
+      </div>
+  </div>
+  
+  <div class="resource1-tooltip"></div>
+
+</mat-card>

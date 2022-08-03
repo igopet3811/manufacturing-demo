@@ -1,0 +1,45 @@
+.resource-daily-card {
+    width: 1200px;
+    margin: 20px;
+}
+
+.resource-daily-outer {
+    width: 1200px;
+    height: 650px;
+    overflow: auto;
+}
+
+.resource-daily-inner {
+    width: 1200px;
+    height:600px;
+}
+
+.tooltip-resource-timestamp {
+    line-height: 1;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 99999999;
+}
+
+.target-resource {
+    fill: none;
+    stroke: grey;
+    stroke-width: 2;
+    shape-rendering: crispEdges;
+    opacity: 0.4;
+    stroke-dasharray: 8;
+}
+
+.card-info {
+    width: 500px;
+    height: 50px;
+    margin: auto;
+    text-align: center;
+}
+
+.icon-warning {
+    color: #e48a16;
+}

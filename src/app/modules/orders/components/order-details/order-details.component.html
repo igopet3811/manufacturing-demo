@@ -1,0 +1,73 @@
+<mat-card class="order-details-card">
+
+    <mat-card-title class="card-title-container">
+        <span>Batch Details</span>
+    </mat-card-title>
+
+    <mat-card-content class="order-details-content">
+        <form class="form">
+
+            <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Order #" [value]="(order !== null) ? order[0].order : null" readonly>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Batch" [value]="(order !== null) ? padBatchNumber(order[0].batch) : null" readonly>
+                </mat-form-field>
+            </div>
+            
+            <mat-form-field class="full-width">
+                <input matInput placeholder="C Number" [value]="(order !== null) ? order[0].cfn : null" readonly>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Description" [value]="(order !== null) ? order[0].description : null" readonly>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Line/Cell" [value]="(order !== null) ? (getLineInfo(order[0].line).description + ' (' + getLineInfo(order[0].line).type +')') : null" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Geography" [value]="(order !== null) ? productDesc.geo : null" readonly>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Recipe" [value]="(order !== null) ? order[0].recipe : null" readonly>
+                </mat-form-field>
+    
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Product Number" [value]="(order !== null) ? order[0].upn : null" readonly>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Shift(s)" [value]="(order !== null) ? shift : null" readonly>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Prod Time Start" [value]="(order !== null) ? prodTime.start : null" readonly>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Prod Time End" [value]="(order !== null) ? prodTime.end : null" readonly>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Standard Deviation (excl. rejects)" [value]="(order !== null) ? stDev.toFixed(3) : null" readonly>
+                </mat-form-field>
+    
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Running Average (excl. rejects)" [value]="(order !== null) ? runAvg.toFixed(3) + ' %' : null" readonly>
+                </mat-form-field>
+            </div>
+
+        </form>
+    </mat-card-content>
+
+</mat-card>

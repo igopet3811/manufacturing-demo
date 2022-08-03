@@ -1,0 +1,18 @@
+<mat-card class="yields-weekly-graph-card">
+
+  <mat-card-title>
+      Lines Weekly
+      <mat-icon class="icon-clickable" (click)="export()" matTooltip="export to PNG">save_alt</mat-icon>
+  </mat-card-title>
+    
+  <div class="yields-weekly-outer">
+      <div class="yields-weekly-inner"> 
+          <svg height="600" id="yieldsWeeklyGraph"></svg>
+      </div>
+  </div>
+ 
+  <div class="tooltip-weekly"></div>
+
+</mat-card>
+
+<app-generic-table [data]="dataSource?.reverse()" [columns]="tableColumns"></app-generic-table>

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Edit User - {{ data.user.username }}</h2>
+
+  <mat-dialog-content [formGroup]="form">
+
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username" readonly>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+
+    <mat-checkbox color="primary" formControlName="isAdmin">Admin</mat-checkbox>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="float:right">
+
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="resetPassword()">Reset Password</button>
+  <button class="mat-raised-button mat-primary" (click)="update()" [disabled]="!form.valid">Update</button>
+
+</mat-dialog-actions>

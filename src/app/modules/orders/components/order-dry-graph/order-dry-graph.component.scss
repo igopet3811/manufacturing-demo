@@ -1,0 +1,67 @@
+.graph-card {
+    width: 1200px;
+    margin: 20px;
+}
+
+.graph-outer {
+    width: 1200px;
+    height: 550px;
+    overflow: auto;
+}
+
+.graph-inner {
+    width: 1200px;
+    height:500px;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.gridline{
+    stroke: black;
+    shape-rendering: crispEdges;
+    stroke-opacity: .2;
+}
+
+.reject {
+    font-size: 8px;
+}
+
+.order-timeline-filter {
+    margin: 0 0 0 50px;
+}
+
+.tooltip-timeline-dry {
+    line-height: 1;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 99999999;
+}
+
+.dry-limits {
+    font-size: 11px;
+    font-weight: bold;
+    fill: red;
+}
+
+.target-dry {
+    fill: none;
+    stroke: red;
+    stroke-width: 2;
+    shape-rendering: crispEdges;
+    opacity: 0.4;
+    stroke-dasharray: 8;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #3f51b5;
+}
+
+.icon-clickable {
+    cursor: pointer;
+    float: right;
+}

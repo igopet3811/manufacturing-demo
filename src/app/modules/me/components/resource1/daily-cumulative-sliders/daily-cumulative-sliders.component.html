@@ -1,0 +1,22 @@
+<mat-card class="resource-daily-cumulative-target-card">
+  <div>
+    <h3>Target configuration</h3>
+  </div>
+  <mat-card-content>    
+    <div *ngFor="let t of cfnTargets; let i = index; trackBy:trackByFn" fxLayout="row" fxFlex="30" fxLayoutAlign="start stretch">
+      <section class="example-section">
+        <mat-form-field class="resource-target-input">
+          <input matInput type="number" placeholder="Batch {{ i+1 }}" [(ngModel)]="cfnTargets[i]">
+        </mat-form-field>
+      </section>
+
+      <mat-slider thumbLabel tickInterval="1" min = "30" max="80" [(ngModel)]="cfnTargets[i]">
+      </mat-slider>
+    </div>
+
+    <div class="filter-button">
+      <button mat-raised-button color="primary" (click)="onApply(cfnTargets)">Apply</button>
+    </div>
+
+  </mat-card-content>
+</mat-card>

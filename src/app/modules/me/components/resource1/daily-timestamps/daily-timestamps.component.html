@@ -1,0 +1,32 @@
+<mat-card class="resource-daily-card">
+
+  <mat-card-title>
+      Daily Resource Shift Performance
+      <mat-icon *ngIf="width !== 0" class="icon-clickable" (click)="export()" matTooltip="Export to PNG">save_alt</mat-icon>
+      <mat-icon class="icon-clickable" matTooltip="Time of the last unit in the DB: {{ lastUnitTime | date:'EEEE, MMMM d, y @ hh:mm a'}}">info_outline</mat-icon>
+  </mat-card-title>
+
+  <app-daily-timestamps-filter></app-daily-timestamps-filter>
+  <h3 *ngIf="data.length !== 0">{{ cellName }} - {{ dateSelect | date:'EEEE, MMMM d, y'}} - {{ shiftName }}</h3>
+  <div *ngIf="data.length !== 0">Time between first and last unit (hh:mm:ss): {{ 1000 * data[data.length - 1]?.total | date:'hh:mm:ss':'UTC' }}</div>
+  <div *ngIf="data.length !== 0">Units total per shift: {{ data.length }}</div>
+  <div *ngIf="data.length !== 0">Average time per unit (sec): {{ avg }}</div>
+
+  <div [hidden]="data.length === 0" class="resource-daily-outer">
+      <div class="resource-daily-inner"> 
+          <svg height="600" id="dailyGraph"></svg>
+      </div>
+  </div>
+
+  <div *ngIf="data.length === 0" fxLayout="column">
+    <mat-card class="card-info">
+        <div>
+            <mat-icon class="icon-warning">warning</mat-icon>
+        </div>
+        <div>
+            No data available for selected options. 
+        </div>
+    </mat-card>
+</div>
+
+</mat-card>

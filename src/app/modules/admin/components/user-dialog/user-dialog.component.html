@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>New User</h2>
+
+  <mat-dialog-content [formGroup]="form">
+
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type=password placeholder="Password" formControlName="password1">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type=password placeholder="Confirm Password" formControlName="password2">
+    </mat-form-field>
+
+    <mat-checkbox color="primary" formControlName="isAdmin">Admin</mat-checkbox>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="float:right">
+
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="!isFormValid()">Save</button>
+
+</mat-dialog-actions>
